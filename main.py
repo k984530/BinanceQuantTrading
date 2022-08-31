@@ -1,4 +1,3 @@
-import os
+from Account.account import login
 
-API_KEY = os.environ['BINANCE_OPEN_API_KEY']
-SECRET_KEY = os.environ['BINANCE_OPEN_API_SECRET']
+login()
