@@ -14,12 +14,16 @@ def get_key():
         print('시스템 환경 변수 BINANCE_OPEN_API_SECRET를 불러들이는데 실패했습니다.')
     return API_KEY, SECRET_KEY
 
-def login():
+def login(test : bool = True):
     global API_KEY, SECRET_KEY, spot_client
     API_KEY, SECRET_KEY = get_key()
     try:
-        spot_client = Client(API_KEY, SECRET_KEY)
-        return spot_client
+        if test:
+            spot_client = Client(API_KEY, SECRET_KEY)
+            return spot_client
+        else :
+            spot_client = Client(API_KEY, SECRET_KEY)
+            return spot_client
     except:
         print('로그인에 실패하였습니다. 올바른 API_KEY, SECRET_KEY인지 확인해주십시오.')
         
