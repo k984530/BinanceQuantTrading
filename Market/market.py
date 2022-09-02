@@ -7,6 +7,14 @@ def get_price(symbol = 'BTCUSDT', test = True):
     spot_client = iftest(test)
     return float(spot_client.ticker_price(symbol)['price'])
 
+def get_klines(symbol = 'BTCUSDT', interval = '1s', limit = '100', test = True):
+    import pandas as pd
+    spot_client = iftest(test)
+    return pd.DataFrame(spot_client.klines(symbol, interval, limit = limit),
+                        columns = ['시작시점','시가','고가','저가','종가','코인거래량',
+                                   '종료시점','달러거래량','거래횟수','구매자 코인 구매량',
+                                   '구매자 달러 구매량','비고']).drop(columns = ['구매자 코인 구매량','구매자 달러 구매량','비고'])
+
 def iftest(test):
     global testURL, URL
     if test:
