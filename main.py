@@ -1,8 +1,13 @@
 import Account
 import Market
-import BackTesting
+from BackTesting import User
 from binance.spot import Spot as Client
 
 client = Account.login()
-a = BackTesting.User(1000, {'BTC' : 0.0})
+Account.get_Margin_Account()
+a = User(100000, {'BTC' : 100.0})
+a.status()
+a.buy('BTC', 1000)
+a.status()
+a.sell('BTC', 10000)
 a.status()
