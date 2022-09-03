@@ -4,9 +4,9 @@ import pandas as pd
 from BackTesting import User
 from binance.spot import Spot as Client
 
-<<<<<<< HEAD
 client = Account.login()
 Account.get_Margin_Account()
+<<<<<<< HEAD
 print(Market.get_symbols())
 =======
 a = [[1,2,3,4,5,6],[1,2,3,4,5,6]]
@@ -16,3 +16,6 @@ for i in range(len(b)):
     print(b.iloc[[i]])
     print()
 >>>>>>> 0b5f59a (testing 함수 구현)
+=======
+print(Market.get_symbols())
+>>>>>>> 0c57650 (staging)
