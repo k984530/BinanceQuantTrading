@@ -6,4 +6,4 @@ from binance.spot import Spot as Client
 
 client = Account.login()
 Account.get_Margin_Account()
-print(Market.get_klines())
+print(Market.get_symbols())
