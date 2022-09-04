@@ -15,6 +15,15 @@ def get_klines(symbol = 'BTCUSDT', interval = '1s', limit = '100', test = True):
                                    '종료시점','달러거래량','거래횟수','구매자 코인 구매량',
                                    '구매자 달러 구매량','비고']).drop(columns = ['구매자 코인 구매량','구매자 달러 구매량','비고'])
 
+def get_symbols(test = True):
+    import sys, os
+    sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+    from Account.account import login
+    spot_client = login()
+    symbol_list = [symbol['coin'] for symbol in spot_client.coin_info()]
+    return symbol_list
+    
+
 def iftest(test):
     global testURL, URL
     if test:
