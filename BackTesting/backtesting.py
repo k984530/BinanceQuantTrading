@@ -2,6 +2,10 @@ import sys, os
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 import Market
 import pandas as pd
+import datetime
+import time
+import random
+
 class User:
     def __init__(self, wallet : float, coin : dict):
         self.wallet = wallet
@@ -14,7 +18,8 @@ class User:
             self.wallet -= price
             print('구매 성공')
         else:
-            print('보유 금액이 적습니다.')    
+            print('보유 금액이 적습니다.') 
+               
     def sell(self, symbol, price, coin_price):
         have_volume = self.coin[symbol]
         sell_volume = price / coin_price
@@ -36,16 +41,41 @@ def testing(coin_Data : 'DataFrame', symbol):
 
     tester = User(10000.0,{})
 
-    buy_cond = False
-    sell_cond = True
+    buy_cond = True
+    sell_cond = False
 
-    coin = symbol
-
+    coin_Data = Market.get_klines()
+    
     for i in range(len(coin_Data)):
-        if cond1:
-            tester.buy(coin, tester.wallet, coin_Data['시가'].iloc[i])
-        if cond2:
-            tester.sell(coin, tester.coin[coin], coin_Data['시가'].iloc[i])
+        if buy_cond:
+            tester.buy(symbol, tester.wallet, coin_Data['시가'].iloc[i])
+        if sell_cond:
+            tester.sell(symbol, tester.coin[coin], coin_Data['시가'].iloc[i])
             
-    tester.sell(coin, tester.coin[coin], coin_Data['시가'].iloc[-1])
+    tester.sell(symbol, tester.coin[coin], coin_Data['시가'].iloc[-1])
     print(tester.wallet)
+
+def strategy_1(t):
+    symbol = random.sample(Market.get_symbols(), 5)
+    interval = ['1m','3m','5m','30m','1h','3h','6h','1d','3d']
+    limit = 2
+    endtime = t
+    test = False
+
+    for s in symbol:
+        checkList = []
+        for i in interval:
+            klines_df = Market.get_klines(symbol = s + 'USDT', interval = i, limit = limit, endtime = t, test = test)
+            klines_df = klines_df[['고가', '저가']]
+            result = klines_df.iloc[1] - klines_df.iloc[0]
+            if result['고가'] > 0 and result['저가'] > 0:
+                checkList.append('+')
+            elif result['고가'] < 0 and result['저가'] < 0:
+                checkList.append('-')
+            else:
+                braek
+        if checkList.count('+') > 7 :
+            return 'buy', s
+        if checkList.count('-') > 7 :
+            return 'sell', s
+    return 'stay', checkList

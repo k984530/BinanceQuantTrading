@@ -6,4 +6,4 @@ from binance.spot import Spot as Client
 
 client = Account.login()
 Account.get_Margin_Account()
-print(Market.get_klines(symbol='ETHUSDT',interval='1s',limit= '500', test =False).코인거래량)
+print(Market.get_klines(symbol='ETHUSDT',interval='1m',limit= '500', test =False).코인거래량)
